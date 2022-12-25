@@ -20,6 +20,20 @@ public class TrafficTomb extends ApplicationAdapter {
 
 	int[][] restrictedPositions = new int[gridSize[0]][gridSize[1]];
 
+	public boolean isRestrictedPosition(int[] position){
+		for(int[] restrictedPosition : restrictedPositions){
+			if(Arrays.equals(restrictedPosition, position)){
+				return true;
+			}
+			for(int axis : position){
+				if(axis < 0 || axis > gridSize[0] * gridSize[1]){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	public void updateRestrictedPositions(Vehicle[] vehicles){
 		int restrictedPositionCount = 0;
 		for (Vehicle vehicle : vehicles) {
@@ -46,11 +60,12 @@ public class TrafficTomb extends ApplicationAdapter {
 
 		vehicles[0] = truckVehicle;
 		vehicles[1] = carVehicle;
-		
-		System.out.println(Arrays.toString(restrictedPositions));
 
 		updateRestrictedPositions(vehicles);		
-		System.out.println(Arrays.toString(restrictedPositions[4]));
+		// System.out.println(Arrays.toString(restrictedPositions[0]));
+		System.out.println(isRestrictedPosition(new int[] {36,0}));
+
+		
 
 	}
 
