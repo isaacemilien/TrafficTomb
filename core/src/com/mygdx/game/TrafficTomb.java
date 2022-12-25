@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import java.util.Arrays;
+import java.util.HashMap;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.graphics.Texture;
@@ -12,6 +13,7 @@ public class TrafficTomb extends ApplicationAdapter {
 	Texture img;
 
 	int[][] grid = new int[6][6];
+	// HashMap<String, int> vehicles = new HashMap<String, int>();
 
 	@Override
 	public void create () {
