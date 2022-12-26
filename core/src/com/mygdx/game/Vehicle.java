@@ -4,19 +4,27 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 public class Vehicle {
-    HashMap<Direction, int[]> directionMatrix = new HashMap<Direction, int[]>();
-    
-    int[][] vehicleSegmentPositions;    
-    Direction direction;
+    // Fields
+    static final HashMap<Direction, int[]> directionMatrix = new HashMap<Direction, int[]>();
+    private MovementAxis movementAxis;
+    private int[][] vehicleSegmentPositions;    
 
-    public Vehicle(int vehicleSegments, Direction direction, int[] vehicleStartPosition){
+    // Constructors
+    static{
+        directionMatrix.put(Direction.UP, new int[]{0,1});
+        directionMatrix.put(Direction.DOWN, new int[]{0,-1});
+        directionMatrix.put(Direction.LEFT, new int[]{-1,0});
+        directionMatrix.put(Direction.RIGHT, new int[]{1,0});
+    }
+
+    public Vehicle(int vehicleSegments, Direction direction, int[] vehicleStartPosition, MovementAxis movementAxis){
         this.vehicleSegmentPositions = new int[vehicleSegments][];
-        this.direction = direction;
         this.vehicleSegmentPositions[0] = vehicleStartPosition;
-        fillDirectionMatrix();
+        this.movementAxis = movementAxis;
         fillVehicleSegments(direction);
     }
     
+    // Methods
     public void fillVehicleSegments(Direction direction){
         for(int i = 0; i < vehicleSegmentPositions.length - 1; i++){
             vehicleSegmentPositions[i + 1] = new int[]{
@@ -25,30 +33,20 @@ public class Vehicle {
             };
         }
     }
-
-    private void fillDirectionMatrix(){
-        directionMatrix.put(Direction.UP, new int[]{0,1});
-        directionMatrix.put(Direction.DOWN, new int[]{0,-1});
-        directionMatrix.put(Direction.LEFT, new int[]{-1,0});
-        directionMatrix.put(Direction.RIGHT, new int[]{1,0});
-    }
     
-    public void move(Direction direction){
-        for(int i = 0; i < vehicleSegmentPositions.length; i++){
-            vehicleSegmentPositions[i] = new int[]{
-                vehicleSegmentPositions[i][0] + directionMatrix.get(direction)[0], 
-                vehicleSegmentPositions[i][1] + directionMatrix.get(direction)[1]
-            };
-        }
+    public int[] getTranslatedPosition(Direction direction, int[] startPosition){
+        return new int[] {startPosition[0] + directionMatrix.get(direction)[0], startPosition[1] + directionMatrix.get(direction)[1]};
     }
 
-    public void run(){
-        // System.out.println(Arrays.toString(vehicleSegmentPositions));
-        // System.out.println(vehicleSegmentPositions.length);
+    public int[][] getSegmentPositions(){
+        return vehicleSegmentPositions;
     }
-    
-    // public static void main(String[] args) {
-    //     Vehicle vehicle = new Vehicle(3, Direction.RIGHT, new int[]{0,0});
-    //     vehicle.run();
-    // }
+
+    public void setSegmentPositions(int[][] positions){
+        vehicleSegmentPositions = positions;
+    }
+
+    public MovementAxis getMovementAxis(){
+        return movementAxis;
+    }
 }
