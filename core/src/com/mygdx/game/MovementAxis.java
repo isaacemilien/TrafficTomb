@@ -9,7 +9,6 @@ public enum MovementAxis{
     private int value;
     private static HashMap map = new HashMap<>();
 
-
     private MovementAxis(int value) {
         this.value = value;
     }

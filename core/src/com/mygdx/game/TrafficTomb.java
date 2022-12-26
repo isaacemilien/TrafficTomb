@@ -47,9 +47,12 @@ public class TrafficTomb extends ApplicationAdapter {
 	}
 
 	public boolean isPositionOutOfVehicleLane(Vehicle vehicle, int[] position){
-		if(position[vehicle.getMovementAxis().getValue()] != vehicle.getSegmentPositions()[0][vehicle.getMovementAxis().getValue()]){
+		int invertedVehicleAxis = 1 - vehicle.getMovementAxis().getValue();
+
+		if(position[invertedVehicleAxis] != vehicle.getSegmentPositions()[0][invertedVehicleAxis]){
 			return true;
 		}
+
 		return false;
 	}
 
@@ -105,7 +108,8 @@ public class TrafficTomb extends ApplicationAdapter {
 
 		updateRestrictedPositions(vehicles);		
 
-		System.out.println(isPositionOccupied(vehicles, new int[]{0,0}, carVehicle));
+		System.out.println(isPositionOutOfVehicleLane(carVehicle, new int[]{8,1}));
+		// System.out.println(carVehicle.getMovementAxis().getValue());4
 	}
 
 	@Override
